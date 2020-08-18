@@ -25,7 +25,7 @@ window.setInterval
 						
 						bannedNames = Object.values (banned).filter (i => i).sort ((a, b) => a.localeCompare (b))
 						
-						console.log (bannedNames.join (', ') + ' попущен' + (bannedNames.length > 1	? 'ы' : ''))
+						console.log (bannedNames.join (', ') + ' попущен' + (bannedNames.length > 1 ? 'ы' : ''))
 					}
 					
 					if (e.altKey)
