@@ -1,3 +1,12 @@
+// ==UserScript==
+// @name        Sosed TV
+// @namespace   https://sosed.tv/*
+// @description Sosed TV
+// @include     https://sosed.tv/*
+// @version     4.0
+// @grant       none
+// ==/UserScript==
+
 var banned = {}, bannedNames
 
 window.setInterval
