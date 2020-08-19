@@ -3,7 +3,7 @@
 // @namespace   https://sosed.tv/*
 // @description Sosed TV
 // @include     https://sosed.tv/*
-// @version     4.0
+// @version     4.1
 // @grant       none
 // ==/UserScript==
 
@@ -43,11 +43,11 @@ window.setInterval
 								url = 'https://www.facebook.com/profile.php?id='
 							else if (site == 'google')
 								url = 'https://www.google.com/maps/contrib/'
-								
+							
 							url += account
+							
+							window.open (url)
 						}
-						
-						window.open (url)
 					}
 				}
 			}
