@@ -2,6 +2,7 @@
 // @name        Sosed TV
 // @namespace   https://sosed.tv/*
 // @description Sosed TV
+// @author      Hans Holzfäller
 // @include     https://sosed.tv/*
 // @version     4.2
 // @grant       none
