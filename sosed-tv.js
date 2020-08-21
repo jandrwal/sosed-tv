@@ -3,7 +3,7 @@
 // @namespace   https://sosed.tv/*
 // @description Sosed TV
 // @include     https://sosed.tv/*
-// @version     4.1
+// @version     4.2
 // @grant       none
 // ==/UserScript==
 
@@ -38,11 +38,17 @@ window.setInterval
 							account = dataFrom.split (':') [1]
 							
 							if (site == 'vkontakte')
+							{
 								url = 'https://vk.com/id'
+							}
 							else if (site == 'facebook')
+							{
 								url = 'https://www.facebook.com/profile.php?id='
+							}
 							else if (site == 'google')
+							{
 								url = 'https://www.google.com/maps/contrib/'
+							}
 							
 							url += account
 							
