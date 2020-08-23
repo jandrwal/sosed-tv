@@ -4,7 +4,7 @@
 // @description Sosed TV
 // @author      Hans Holzfäller
 // @include     https://sosed.tv/*
-// @version     4.2
+// @version     5.4
 // @grant       none
 // ==/UserScript==
 
@@ -90,3 +90,83 @@ window.addEventListener
 	}, 
 	false
 )
+
+function notify ()
+{
+	var userNames = ['Test String']
+	var titleOld = document.title, titleNew, interval
+	var messagesOld, messagesCurrent, messagesNew, usersNew, messagesCount = 0, messagesCountNew
+	
+	window.addEventListener
+	(
+		'blur', 
+		function (e)
+		{
+			messagesOld = getCurrentMessages ()
+			
+			window.setInterval
+			(
+				function ()
+				{
+					messagesCurrent = getCurrentMessages ()
+					messagesNew = messagesCurrent.filter (i => messagesOld.indexOf (i) == -1)
+					messagesOld = messagesCurrent
+					
+					messagesNew = messagesNew.map (i => document.querySelector ('[data-msgid="' + i + '"]'))
+					
+					usersNew = messagesNew.map (i => i.innerHTML.match (/data-name="(.*?)"/) [1])
+					messagesNew = messagesNew.map (i => i.getElementsByClassName ('chat__text') [0].innerHTML.replace (/\r|\n/g, '').trim ())
+					
+					messagesCountNew = 0
+					
+					for (var i = 0; i < messagesNew.length; i++)
+					{
+						var messageNew = messagesNew [i]
+						var userNew = usersNew [i]
+						
+						var match = userNames.reduce ((n, i) => n || (messageNew.match (new RegExp (i, 'ig')) ? 1 : 0), 0)
+						
+						if (match)
+						{
+							console.log ('<' + userNew + '>: ' + messageNew.replace (/<[^<>]*>/g, ''))
+							
+							messagesCountNew++
+						}
+					}
+					
+					messagesCount += messagesCountNew
+					
+					if (messagesCountNew)
+					{
+						clearInterval (interval)
+						
+						titleNew = '(' + messagesCount + ') ' + titleOld
+						
+						interval = setInterval (() => (document.title = document.title == titleOld ? titleNew : titleOld), 500)
+					}
+				}, 
+				5000
+			)
+		}, 
+		false
+	)
+
+	window.addEventListener
+	(
+		'focus', 
+		function (e)
+		{
+			document.title = titleOld
+			messagesCount = 0; messagesCountNew = 0
+			clearInterval (interval)
+		}, 
+		false
+	)
+
+	function getCurrentMessages ()
+	{
+		return Array.prototype.slice.call (document.getElementsByClassName ('chat__message')).map (i => i.getAttribute ('data-msgid')).filter (i => i != 'system')
+	}
+}
+
+document.onreadystatechange = function () {if (document.readyState == 'complete') notify ()}
