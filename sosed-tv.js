@@ -4,7 +4,7 @@
 // @description Sosed TV
 // @author      Hans Holzfäller
 // @include     https://sosed.tv/*
-// @version     5.4
+// @version     5.5
 // @grant       none
 // ==/UserScript==
 
@@ -40,18 +40,16 @@ window.setInterval
 							
 							if (site == 'vkontakte')
 							{
-								url = 'https://vk.com/id'
+								url = 'https://vk.com/id' + account
 							}
 							else if (site == 'facebook')
 							{
-								url = 'https://www.facebook.com/profile.php?id='
+								url = 'https://graph.facebook.com/' + account + '/picture'
 							}
 							else if (site == 'google')
 							{
-								url = 'https://www.google.com/maps/contrib/'
+								url = 'https://www.google.com/maps/contrib/' + account
 							}
-							
-							url += account
 							
 							window.open (url)
 						}
