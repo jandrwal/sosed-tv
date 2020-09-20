@@ -4,7 +4,7 @@
 // @description Sosed TV
 // @author      Hans Holzfäller
 // @include     https://sosed.tv/*
-// @version     5.6
+// @version     5.7
 // @grant       none
 // ==/UserScript==
 
@@ -71,25 +71,34 @@ window.setInterval
 
 function openFacebookPic (url)
 {
-	var req = new XMLHttpRequest ()
-	var reader = new FileReader ()
-	
-	req.open ('GET', url, true)
-	req.responseType = 'blob'
-	
-	req.onreadystatechange = function ()
+	if (window.chrome)
 	{
-		if (req.readyState == 4)
-		{
-			var blob = req.response
-			
-			reader.readAsDataURL (blob)
-			
-			reader.onloadend = i => window.open (reader.result)
-		}
+		var tab = window.open ()
+		
+		tab.document.write ('<img src="' + url + '"/>')
 	}
-	
-	req.send (null)
+	else
+	{
+		var req = new XMLHttpRequest ()
+		var reader = new FileReader ()
+		
+		req.open ('GET', url, true)
+		req.responseType = 'blob'
+		
+		req.onreadystatechange = function ()
+		{
+			if (req.readyState == 4)
+			{
+				var blob = req.response
+				
+				reader.readAsDataURL (blob)
+				
+				reader.onloadend = i => window.open (reader.result)
+			}
+		}
+		
+		req.send (null)
+	}
 }
 
 window.addEventListener
