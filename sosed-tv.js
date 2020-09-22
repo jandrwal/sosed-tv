@@ -4,7 +4,8 @@
 // @description Sosed TV
 // @author      Hans Holzfäller
 // @include     https://sosed.tv/*
-// @version     5.7
+// @include     https://sosedki.tv/*
+// @version     5.8
 // @grant       none
 // ==/UserScript==
 
