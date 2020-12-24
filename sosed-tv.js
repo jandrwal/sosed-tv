@@ -5,13 +5,15 @@
 // @author      Hans Holzfäller
 // @include     https://sosed.tv/*
 // @include     https://sosedki.tv/*
-// @version     5.9
+// @version     5.10
 // @grant       none
 // ==/UserScript==
 
 var banned = {}, bannedNames
 
 var userNames = ['Test String']
+
+var messagesOld = []
 
 window.setInterval
 (
@@ -59,11 +61,17 @@ window.setInterval
 					}
 				}
 				
+				var idNew = i.getAttribute ('data-msgid')
 				var messageNew = i.getElementsByClassName ('chat__text') [0]
 				
-				messageNew.innerHTML = messageNew.innerHTML.replace (/<\/?span.*?>/g, '')
-				
-				userNames.forEach (j => messageNew.innerHTML = messageNew.innerHTML.replace (new RegExp (j, 'ig'), k => '<span class="chat__reply-to">' + k + '</span>'))
+				if (idNew != 'system' && messagesOld.indexOf (idNew) == -1)
+				{
+					messageNew.innerHTML = messageNew.innerHTML.replace (/<\/?span.*?>/g, '')
+					
+					userNames.forEach (j => messageNew.innerHTML = messageNew.innerHTML.replace (new RegExp (j, 'ig'), k => '<span class="chat__reply-to">' + k + '</span>'))
+					
+					messagesOld.push (idNew)
+				}
 			}
 		)
 		
